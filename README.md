@@ -1,4 +1,4 @@
-# ZAIQA EXPRESS: Meal Kit Service
+#Meal Kit Service
 
 
 Introducing a game-changer for Karachi's culinary scene: THE ZAIQA EXPRESS! Say goodbye to meal planning stress and grocery store queues. With our software, you can customize meal kits, get pre-portioned ingredients delivered, and enjoy hassle-free cooking. It's the ultimate solution for busy Karachiites craving delicious, home-cooked meals without the fuss. Join us as we revolutionize how Karachi eats, one meal kit at a time!
