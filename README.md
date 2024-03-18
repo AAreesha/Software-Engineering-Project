@@ -13,3 +13,15 @@ Welcome to the Meal Kit Management System repository! Here, we present our softw
 [Research Project Proposal](https://habibuniversity-my.sharepoint.com/:w:/r/personal/az07728_st_habib_edu_pk/Documents/Project%20Proposal.docx?d=w221d71cc12ca42df9d5e21aa8f3092ff&csf=1&web=1&e=7IfutL)
 
 [Research Feasibility Report](https://www.overleaf.com/read/zjxwfbbmczvm#9ba5c7)
+
+
+
+## Second Step:
+[Wireframes](https://www.figma.com/file/lovwejXuZFvtixh0poSaZu/Untitled?type=design&node-id=1-2&mode=design&t=JNYJL3lg9HebKSD8-0)
+
+
+## To Dos:
+1. Make Sprint Planning Video.
+2. Make Stand Up Meeting Video.
+3. Make UMLS.
+
