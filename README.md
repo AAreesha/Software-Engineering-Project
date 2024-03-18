@@ -6,8 +6,11 @@ Introducing a game-changer for Karachi's culinary scene: THE ZAIQA EXPRESS! Say 
 
 Welcome to the Meal Kit Management System repository! Here, we present our software engineering project designed to revolutionize the culinary experience in Karachi. In response to the ever-increasing demand for convenient yet wholesome meal solutions, our team has developed a comprehensive software platform. Our system aims to simplify meal planning and grocery shopping by offering customizable meal kits with pre-portioned ingredients delivered directly to the user's doorstep. Leveraging innovative software engineering principles and local culinary expertise, we aspire to redefine the way Karachiites cook and dine. This repository serves as a central hub for our project, housing development progress, documentation, and resources. Join us on this journey as we innovate and transform the culinary landscape, one meal kit at a time!
 
-##Milestones and Documentation:
+## Milestones and Documentation:
 
+
+## All In One Document: 
+[Project Document](https://habibuniversity-my.sharepoint.com/:w:/g/personal/muhammad_faizan_sse_habib_edu_pk/EY6AoUMAZjNKiV8C6a8mOjMBo114rw-Xov3X4JohiLEiLg?e=SJsFKX)
 ## First Step:
 
 [Research Project Proposal](https://habibuniversity-my.sharepoint.com/:w:/r/personal/az07728_st_habib_edu_pk/Documents/Project%20Proposal.docx?d=w221d71cc12ca42df9d5e21aa8f3092ff&csf=1&web=1&e=7IfutL)
