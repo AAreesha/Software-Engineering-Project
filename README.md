@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Meal Kit Service
 
 
