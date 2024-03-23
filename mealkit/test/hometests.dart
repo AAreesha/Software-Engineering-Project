@@ -7,14 +7,17 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 void testHomeUI(WidgetTester tester) async
 {
+
+//----------------------------create a sample page-------------------------------------//
     await tester.pumpWidget(MaterialApp(
       home: HomeView(),
     ));
 
-    // Verify the appearance of the AppBar
+//-------------------------check UI elements------------------------------------------//
     expect(find.byType(AppBar), findsOneWidget);
     expect(find.text('Home'), findsOneWidget); //replace home with website name 
 
+//------------------------check if the carousel works fine--------------------------//
     expect(find.byType(CarouselSlider), findsOneWidget);
 
     //verifying that carousel works fine
@@ -32,6 +35,8 @@ void testHomeUI(WidgetTester tester) async
     expect(find.byWidgetPredicate((widget) => widget is Image && widget.image is AssetImage && (widget.image as AssetImage).assetName == 'assets/image2.jpg'), findsOneWidget);
 
     // Repeat the above steps for other images if needed - when images are finalized
+
+//------------------------check other sections--------------------------------------//
 }
 
 void testCartButton(WidgetTester tester) async
