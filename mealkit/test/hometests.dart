@@ -4,7 +4,7 @@ import 'package:mealkit/navigation.dart';
 import 'package:mealkit/home.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-//add more buttons of navigation
+
 void testHomeUI(WidgetTester tester) async
 {
     await tester.pumpWidget(MaterialApp(
