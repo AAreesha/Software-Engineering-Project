@@ -43,7 +43,7 @@ class _NavBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(fontSize:20 , color: Colors.black),
+      style: TextStyle(fontSize:20 , color: Colors.white),
     );
   }
 }
@@ -57,7 +57,7 @@ class _CartButton extends StatelessWidget {
           onPressed: () {
             // Handle cart button press
           },
-         icon: Icon(Icons.shopping_cart, color: Colors.black, size: 30),
+         icon: Icon(Icons.shopping_cart, color: Colors.white, size: 30),
         ),
     
       ],
