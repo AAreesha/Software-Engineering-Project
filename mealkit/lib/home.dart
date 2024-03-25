@@ -84,9 +84,9 @@ class HomeView extends StatelessWidget {
               child: _buildContentRow(
                 [
                   "Our Menu",
-                  "How it works",
+                  "How it Works",
                   "Login",
-                  "Sign up",
+                  "Sign Up",
                 ],
                 [
                   "FAQs",
@@ -95,7 +95,7 @@ class HomeView extends StatelessWidget {
                   "Privacy Policy",
                 ],
                 [
-                  "About us",
+                  "About Us",
                   "Press",
                   "Legal",
                 ],

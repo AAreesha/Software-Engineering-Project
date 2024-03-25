@@ -7,17 +7,24 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 void testHomeUI(WidgetTester tester) async
 {
-
 //----------------------------create a sample page-------------------------------------//
     await tester.pumpWidget(MaterialApp(
       home: HomeView(),
     ));
 
+    
 //-------------------------check UI elements------------------------------------------//
+  //-------------------navigation bar--------------------------//
     expect(find.byType(AppBar), findsOneWidget);
-    expect(find.text('Home'), findsOneWidget); //replace home with website name 
+    
+    // expect(find.text('Home'), findsOneWidget); //replace home with website name
+    expect(find.text('Login'), findsNWidgets(2)); //because the page has two login texts
+    expect(find.text('Menu'),findsOneWidget);
+    expect(find.text('Voucher'), findsOneWidget);
+    expect(find.text('About Us'), findsNWidgets(2));
+    expect(find.byIcon(Icons.shopping_cart), findsOneWidget);
 
-//------------------------check if the carousel works fine--------------------------//
+  //-------------------------carousel-------------------------//
     expect(find.byType(CarouselSlider), findsOneWidget);
 
     //verifying that carousel works fine
@@ -36,7 +43,63 @@ void testHomeUI(WidgetTester tester) async
 
     // Repeat the above steps for other images if needed - when images are finalized
 
-//------------------------check other sections--------------------------------------//
+  //------------------------best sellers-------------------------//
+    //assuming that the bestsellers are named as best-seller-image and best-seller-description and that there will always be 3
+
+  //   expect(find.byWidgetPredicate((widget) => widget is Container && widget.color == Colors.green), findsOneWidget); //change color
+
+  //   expect(find.text('Best Sellers'), findsOneWidget);
+
+  //   expect(find.byKey(Key('best_seller_image')), findsNWidgets(3));
+  //   expect(find.byKey(Key('best_seller_description')), findsNWidgets(3));
+  
+  // //-----------------------description--------------------------//
+
+  //   expect(find.byWidgetPredicate((widget) => widget is Container && widget.color == Colors.green), findsOneWidget);
+
+  //   expect(find.byWidgetPredicate(
+  //     (widget) =>
+  //         widget is Image &&
+  //         widget.image is AssetImage &&
+  //         (widget.image as AssetImage).assetName == 'assets/best_seller_image.jpg', //chef
+  //   ), findsOneWidget);
+  //   expect(find.text('Meal Kits that fit your needs.'), findsOneWidget);
+
+  //   expect(find.byWidgetPredicate(
+  //     (widget) =>
+  //         widget is Image &&
+  //         widget.image is AssetImage &&
+  //         (widget.image as AssetImage).assetName == 'assets/best_seller_image.jpg', //notebook
+  //   ), findsOneWidget);
+  //   expect(find.text('Customize your own Meals.'), findsOneWidget);
+
+  //   expect(find.byWidgetPredicate(
+  //     (widget) =>
+  //         widget is Image &&
+  //         widget.image is AssetImage &&
+  //         (widget.image as AssetImage).assetName == 'assets/best_seller_image.jpg', //spoon fork
+  //   ), findsOneWidget);
+  //   expect(find.text('Fresh, pre-portioned ingredients'), findsOneWidget);
+  
+  // //-----------------------Reviews-----------------------------------//
+  //   expect(find.byWidgetPredicate((widget) => widget is Container && widget.color == Colors.green), findsOneWidget); //change color
+
+  //-----------------------Contact-----------------------------------//
+    expect(find.byWidgetPredicate((widget) => widget is Container && widget.color == Colors.green), findsOneWidget);
+    //login, about us checked already
+    expect(find.text('Services'), findsOneWidget); 
+    expect(find.text('Our Menu'), findsOneWidget);
+    expect(find.text('How it Works'), findsOneWidget);
+    expect(find.text('Sign Up'), findsOneWidget);
+    expect(find.text('Resources'), findsOneWidget); 
+    expect(find.text('FAQs'), findsOneWidget);
+    expect(find.text('Recipe Categories'), findsOneWidget);
+    expect(find.text('Terms and Conditions'), findsOneWidget);
+    expect(find.text('Privacy Policy'), findsOneWidget); 
+    expect(find.text('Company'), findsOneWidget);
+    expect(find.text('Press'), findsOneWidget);
+    expect(find.text('Legal'), findsOneWidget);
+    //check for phone number and social media handles + the handles connect to links
 }
 
 void testCartButton(WidgetTester tester) async
