@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'registration.dart';
 import 'menupage.dart'; 
+import 'loginpage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
       ),
       home: HomeView(),
       // home: Registration(),
-        //  home: MenuPage()
+      // home: MenuPage(),
+      // home: Login()
     );
   }
 }
