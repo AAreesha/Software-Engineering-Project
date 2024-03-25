@@ -12,6 +12,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite: ^2.0.2
+  sqflite_common_ffi: ^2.0.2
+  
 
   carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.6
@@ -42,5 +45,6 @@ flutter:
     - assets/pic4.png
     - assets/pic5.png
     - assets/pic6.png
+    
 
   
