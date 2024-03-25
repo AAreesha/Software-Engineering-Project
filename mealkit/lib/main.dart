@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'registration.dart';
+import 'menupage.dart'; 
 
 void main() {
   runApp(const MyApp());
@@ -17,8 +18,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green
       ),
-      home: HomeView(),
+      // home: HomeView(),
       // home: Registration(),
+         home: MenuPage()
     );
   }
 }
