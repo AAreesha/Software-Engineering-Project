@@ -3,8 +3,14 @@ import 'home.dart';
 import 'registration.dart';
 import 'menupage.dart'; 
 import 'loginpage.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  sqfliteFfiInit();
+  // Initialize databaseFactory before using sqflite functions
+  databaseFactory = databaseFactoryFfi;
   runApp(const MyApp());
 }
 
@@ -19,8 +25,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green
       ),
-      home: HomeView(),
-      // home: Registration(),
+      // home: HomeView(),
+      home: Registration()
       // home: MenuPage(),
       // home: Login()
     );
