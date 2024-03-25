@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mealkit/navigation.dart';
 import 'package:mealkit/home.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
+import 'package:mealkit/loginpage.dart';
 
 void testHomeUI(WidgetTester tester) async
 {
@@ -21,7 +21,7 @@ void testHomeUI(WidgetTester tester) async
     expect(find.text('Login'), findsNWidgets(2)); //because the page has two login texts
     expect(find.text('Menu'),findsOneWidget);
     expect(find.text('Voucher'), findsOneWidget);
-    expect(find.text('About Us'), findsNWidgets(2));
+    expect(find.text('About Us'), findsNWidgets(2)); //two about us on the page
     expect(find.byIcon(Icons.shopping_cart), findsOneWidget);
 
   //-------------------------carousel-------------------------//
@@ -130,9 +130,9 @@ void testLoginButton(WidgetTester tester) async
       home: Scaffold(
         body: Navigationbar(), // Render Navigationbar on the screen for testing
       ),
-      // routes: {
-      //   '/login': (context) => LoginPage(), // replace LoginPage with the class that defines the page
-      // },
+      routes: {
+        '/login': (context) => Login(), // replace LoginPage with the class that defines the page
+      },
     ));
 
     // Find the login button
