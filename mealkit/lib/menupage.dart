@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'recipedetail.dart';
+import 'navigation.dart';
 
 class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Menu'),
+       appBar: AppBar(
+        backgroundColor: Colors.green,
+         automaticallyImplyLeading: false,
+        title: Navigationbar(),
       ),
       body: ListView(
         children: [

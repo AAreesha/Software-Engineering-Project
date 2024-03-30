@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Menupage.dart'; // Import your MenuPage.dart file here
 
 class Navigationbar extends StatelessWidget {
   const Navigationbar({Key? key}) : super(key: key);
@@ -17,13 +18,15 @@ class Navigationbar extends StatelessWidget {
             child: Image.asset('assets/logo.png'), // Replace 'assets/logo.png' with your logo path
           ),
           SizedBox(width: 100), // Add space between logo and menu items
-          _NavBarItem('Menu'),
+          _NavBarItem('Home', '/home'),
+          SizedBox(width: 100), // Add space between logo and menu items
+          _NavBarItem('Menu', '/menu'),
           SizedBox(width: 100), // Add space between Menu and Voucher
-          _NavBarItem('Voucher'),
+          _NavBarItem('Voucher', '/voucher'),
           SizedBox(width: 100), // Add space between Voucher and About Us
-          _NavBarItem('About Us'),
+          _NavBarItem('About Us', '/menu'),
           Spacer(), // Take all available space between About Us and right corner
-          _NavBarItem('Login'),
+          _NavBarItem('Login', '/wrapper'),
           SizedBox(width: 20), // Add space between Login and Cart
           _CartButton(),
         ],
@@ -34,16 +37,28 @@ class Navigationbar extends StatelessWidget {
 
 class _NavBarItem extends StatelessWidget {
   final String title;
+  final String route;
+
   const _NavBarItem(
-    this.title, {
+    this.title,
+    this.route, {
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: TextStyle(fontSize:20 , fontWeight: FontWeight.bold,color: Colors.white),
+    return TextButton(
+      onPressed: () {
+        Navigator.pushNamed(context, route);
+      },
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
@@ -57,10 +72,10 @@ class _CartButton extends StatelessWidget {
           onPressed: () {
             // Handle cart button press
           },
-         icon: Icon(Icons.shopping_cart, color: Colors.white, size: 30),
+          icon: Icon(Icons.shopping_cart, color: Colors.white, size: 30),
         ),
-    
       ],
     );
   }
 }
+

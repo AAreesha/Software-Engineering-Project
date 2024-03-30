@@ -11,6 +11,7 @@ class RecipeDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+         automaticallyImplyLeading: false,
       ),
       body: DefaultTabController(
         length: 2, // Number of tabs

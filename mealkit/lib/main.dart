@@ -6,6 +6,8 @@ import 'home.dart';
 import 'registration.dart';
 import 'menupage.dart'; 
 import 'loginpage.dart';
+import 'voucher.dart';
+import 'package:mealkit/screens/authenticate/register.dart';
 import 'package:mealkit/screens/authenticate/sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:mealkit/models/user.dart';
@@ -32,16 +34,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User_Details?>.value(
-      initialData: null, // Provide an initial value or null if you don't have any
-      value: AuthService().user,
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
-        home: Wrapper(),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.green
       ),
+      home: HomeView(),
+      routes: {
+    '/menu': (context) => MenuPage(),
+    '/home': (context) => HomeView(),
+    '/voucher': (context) => VoucherPage(),
+    '/wrapper': (context) => Wrapper(),
+    // Define routes for other pages if needed
+  },
     );
   }
 }
