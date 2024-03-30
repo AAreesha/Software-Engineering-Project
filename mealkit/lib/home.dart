@@ -270,16 +270,16 @@ Widget _buildBestSellersSection() {
       ),
       SizedBox(height: 10),
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Spread out the items evenly
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(
-            child: _buildBestSellerItem('assets/product1.png', 'Product 1'),
+            child: _buildBestSellerItem('assets/bestseller1.png', 'Product 1', 200, 200), // Adjust dimensions as needed
           ),
           Expanded(
-            child: _buildBestSellerItem('assets/product2.png', 'Product 2'),
+            child: _buildBestSellerItem('assets/product2.png', 'Product 2', 200, 200), // Adjust dimensions as needed
           ),
           Expanded(
-            child: _buildBestSellerItem('assets/product2.png', 'Product 3'),
+            child: _buildBestSellerItem('assets/product2.png', 'Product 3', 200, 200), // Adjust dimensions as needed
           ),
         ],
       ),
@@ -287,27 +287,27 @@ Widget _buildBestSellersSection() {
   );
 }
 
+Widget _buildBestSellerItem(String imagePath, String productName, double width, double height) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 4.0), // Adjust the horizontal padding to decrease spacing
+    child: Column(
+      children: [
+        Image.asset(
+          imagePath,
+          width: width,
+          height: height,
+          fit: BoxFit.cover,
+        ),
+        SizedBox(height: 5),
+        Text(
+          productName,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ],
+    ),
+  );
+}
 
-  Widget _buildBestSellerItem(String imagePath, String productName) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Image.asset(
-            imagePath,
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 5),
-          Text(
-            productName,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
-  }
 
 
   Widget _buildGreenBackgroundContent() {
