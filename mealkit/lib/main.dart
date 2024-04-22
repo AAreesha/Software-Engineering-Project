@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green
       ),
+      //  home: MenuPage(),
       home: HomeView(),
       routes: {
     '/menu': (context) => MenuPage(),
