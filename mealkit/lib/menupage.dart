@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'navigation.dart'; // Import the Navigationbar widget file here
 
 const kPrimaryColor = Color(0xFFe1eaf1);
-const kSecondaryColor = Color(0xFF006400); // Dark green color
+const kSecondaryColor = Colors.green; // Dark green color
 const kMaxWidth = 1232.0;
 const kPadding = 20.0;
 
@@ -161,3 +161,4 @@ class MenuPage extends StatelessWidget {
     );
   }
 }
+

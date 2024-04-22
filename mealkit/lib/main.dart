@@ -12,6 +12,8 @@ import 'package:mealkit/screens/authenticate/sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:mealkit/models/user.dart';
 import 'package:mealkit/screens/wrapper.dart';
+import 'package:mealkit/navigation.dart';
+
 
 
 

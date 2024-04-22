@@ -273,7 +273,7 @@ Widget _buildBestSellersSection() {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(
-            child: _buildBestSellerItem('assets/bestseller1.png', 'Product 1', 200, 200), // Adjust dimensions as needed
+            child: _buildBestSellerItem('assets/product1.png', 'Product 1', 200, 200), // Adjust dimensions as needed
           ),
           Expanded(
             child: _buildBestSellerItem('assets/product2.png', 'Product 2', 200, 200), // Adjust dimensions as needed
