@@ -12,8 +12,6 @@ import 'package:mealkit/screens/authenticate/sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:mealkit/models/user.dart';
 import 'package:mealkit/screens/wrapper.dart';
-import 'package:mealkit/navigation.dart';
-
 
 
 
@@ -27,29 +25,29 @@ void main() async {
       projectId: "mealkit-project")
   );
   // Initialize databaseFactory before using sqflite functions
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}); // Fix the constructor definition
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.green
+    return StreamProvider<User_Details?>.value(
+      value: AuthService().user,
+      initialData: null,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        home: Wrapper(), // Default screen to determine where to navigate
+        routes: {
+          '/menu': (context) => MenuPage(),
+          '/home': (context) => HomeView(),
+          '/voucher': (context) => VoucherPage(),
+          '/wrapper': (context) => Wrapper(),
+          '/register': (context) => Register(toggleView: () {}),
+        },
       ),
-      //  home: MenuPage(),
-      home: HomeView(),
-      routes: {
-    '/menu': (context) => MenuPage(),
-    '/home': (context) => HomeView(),
-    '/voucher': (context) => VoucherPage(),
-    '/wrapper': (context) => Wrapper(),
-    // Define routes for other pages if needed
-  },
     );
   }
 }
