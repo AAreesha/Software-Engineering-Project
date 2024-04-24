@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'navigation.dart';
+import 'menupage.dart';
 
 class VoucherPage extends StatelessWidget {
   // Dummy data for vouchers
@@ -22,7 +23,7 @@ class VoucherPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         title: Navigationbar(),
+         title: Navigationbar(total: 0.0,cartItems: [],),
           backgroundColor: Colors.green,
           automaticallyImplyLeading: false,
       ),

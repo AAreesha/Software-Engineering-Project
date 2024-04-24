@@ -27,7 +27,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         title: Navigationbar(),
+         title: Navigationbar(total: 0.0,cartItems: [],),
          automaticallyImplyLeading: false,
           backgroundColor: Colors.green,
       ),

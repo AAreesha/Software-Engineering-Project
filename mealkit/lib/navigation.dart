@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'Menupage.dart'; // Import your MenuPage.dart file here
-import 'review.dart'; // Import your review.dart file here
+import 'menupage.dart';
+
 
 class Navigationbar extends StatelessWidget {
-  const Navigationbar({Key? key}) : super(key: key);
+  final double total;
+  final List<CartItem> cartItems;
+
+  const Navigationbar({Key? key, required this.total, required this.cartItems}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class Navigationbar extends StatelessWidget {
           Spacer(), // Take all available space between About Us and right corner
           _NavBarItem('Login', '/wrapper'),
           SizedBox(width: 20), // Add space between Login and Cart
-          _CartButton(), // Added Cart Button here
+          _CartButton(total: total, cartItems: cartItems), // Added Cart Button here
         ],
       ),
     );
@@ -65,12 +68,17 @@ class _NavBarItem extends StatelessWidget {
 }
 
 class _CartButton extends StatelessWidget {
+  final double total;
+  final List<CartItem> cartItems;
+
+  const _CartButton({Key? key, required this.total, required this.cartItems}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
         // Open the cart panel
-        CartPanel.showCartPanel(context,5);
+        CartPanel.showCartPanel(context, total, cartItems);
       },
       icon: Icon(Icons.shopping_cart, color: Colors.white, size: 30),
     );
@@ -78,11 +86,15 @@ class _CartButton extends StatelessWidget {
 }
 
 class CartPanel extends StatelessWidget {
-  static showCartPanel(BuildContext context, int totalItems) {
+  static showCartPanel(BuildContext context, double total, List<CartItem> items) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
+        double shipping = 150;
+        double tax = total * 0.13;
+        double totalBill = total + shipping + tax;
+
         return Container(
           padding: EdgeInsets.all(20),
           height: MediaQuery.of(context).size.height * 0.8,
@@ -103,7 +115,7 @@ class CartPanel extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '($totalItems items)',
+                      '(${items.length} items)',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -119,14 +131,35 @@ class CartPanel extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 3,
-                      child: ListView.builder(
-                        itemCount: totalItems,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            title: Text('Item ${index + 1}'),
-                          );
-                        },
-                      ),
+                      child: items.isEmpty
+                          ? Center(child: Text("No items in your cart"))
+                          : ListView.builder(
+                              itemCount: items.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return ListTile(
+                                  title: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(items[index].name),
+                                      IconButton(
+                                        onPressed: () {
+                                          // Remove the item from the cart
+                                          // You may want to add a confirmation dialog here
+                                          items.removeAt(index);
+                                          // Update the total
+                                          total = items.fold(0, (previousValue, element) => previousValue + element.price);
+                                          // Rebuild the cart panel
+                                          Navigator.pop(context);
+                                          CartPanel.showCartPanel(context, total, items);
+                                        },
+                                        icon: Icon(Icons.clear),
+                                      ),
+                                    ],
+                                  ),
+                                  trailing: Text('\Rs.${items[index].price.toStringAsFixed(2)}'),
+                                );
+                              },
+                            ),
                     ),
                     SizedBox(width: 20), // Add space between items and order summary
                     Expanded(
@@ -143,11 +176,11 @@ class CartPanel extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 20),
-                          _OrderSummaryItem('Subtotal', '\$100.00'),
-                          _OrderSummaryItem('Shipping', '\$10.00'),
-                          _OrderSummaryItem('Tax', '\$5.00'),
+                          _OrderSummaryItem('Subtotal', '\Rs.${total.toStringAsFixed(2)}'),
+                          _OrderSummaryItem('Shipping', '\Rs.${shipping.toStringAsFixed(2)}'),
+                          _OrderSummaryItem('Tax', '\Rs.${tax.toStringAsFixed(2)}'),
                           Divider(),
-                          _OrderSummaryItem('Total', '\$115.00'),
+                          _OrderSummaryItem('Total', '\Rs.${totalBill.toStringAsFixed(2)}'),
                           SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () {

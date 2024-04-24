@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'navigation.dart';
+import 'menupage.dart';
 
 
 class Registration extends StatelessWidget{
   const Registration({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Navigationbar(),
+        title: Navigationbar(total: 0.0,cartItems: [],),
         centerTitle: true,
       ),
 

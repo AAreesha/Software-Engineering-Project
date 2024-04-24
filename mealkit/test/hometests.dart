@@ -106,7 +106,7 @@ void testCartButton(WidgetTester tester) async
 {
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
-        body: Navigationbar(), // Render Navigationbar on the screen for testing
+        body: Navigationbar(total: 0.0,cartItems: [],), // Render Navigationbar on the screen for testing
       ),
       // routes: {
       //   '/cart': (context) => CartPage(), // replace cartpage with the class that defines that page
@@ -128,7 +128,7 @@ void testLoginButton(WidgetTester tester) async
 {
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
-        body: Navigationbar(), // Render Navigationbar on the screen for testing
+        body: Navigationbar(total: 0.0,cartItems: [],), // Render Navigationbar on the screen for testing
       ),
       routes: {
         '/login': (context) => Login(), // replace LoginPage with the class that defines the page

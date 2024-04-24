@@ -4,9 +4,11 @@ import 'navigation.dart';
 import 'review.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:mealkit/screens/wrapper.dart';
+import 'menupage.dart';
 
 class HomeView extends StatelessWidget {
-
+  double total = 0.0;
+  List<CartItem> cart = [];
   @override
   Widget build(BuildContext context) {
   return Container(
@@ -16,7 +18,7 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.green,
         automaticallyImplyLeading: false,
-        title: Navigationbar(),
+        title: Navigationbar(total: total,cartItems: cart,),
       ),
       body: SingleChildScrollView(
         child: Column(
