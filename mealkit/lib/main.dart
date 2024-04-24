@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: Wrapper(), // Default screen to determine where to navigate
+        home: HomeView(), // Default screen to determine where to navigate
         routes: {
           '/menu': (context) => MenuPage(),
           '/home': (context) => HomeView(),
