@@ -4,6 +4,8 @@ import 'package:mealkit/screens/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'home.dart';
 import 'registration.dart';
+import 'package:mealkit/about.dart';
+import 'package:mealkit/checkout.dart';
 import 'menupage.dart'; 
 import 'loginpage.dart';
 import 'voucher.dart';
@@ -46,6 +48,9 @@ class MyApp extends StatelessWidget {
           '/voucher': (context) => VoucherPage(),
           '/wrapper': (context) => Wrapper(),
           '/register': (context) => Register(toggleView: () {}),
+          '/about' : (context) =>  AboutUsPage (),
+          '/checkout':(context) => CheckoutPage(),
+
         },
       ),
     );

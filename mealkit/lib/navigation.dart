@@ -37,7 +37,7 @@ class _NavigationbarState extends State<Navigationbar> {
           SizedBox(width: 100), // Add space between Menu and Voucher
           _NavBarItem('Voucher', '/voucher'),
           SizedBox(width: 100), // Add space between Voucher and About Us
-          _NavBarItem('About Us', '/menu'),
+          _NavBarItem('About Us', '/about'),
           Spacer(), // Take all available space between About Us and right corner
           _NavBarItem('Login', '/wrapper'),
           SizedBox(width: 20), // Add space between Login and Cart
@@ -229,7 +229,7 @@ class CartPanel extends StatelessWidget {
                               SizedBox(height: 20),
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/menu');
+                                  Navigator.pushNamed(context, '/checkout');
                                 },
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
