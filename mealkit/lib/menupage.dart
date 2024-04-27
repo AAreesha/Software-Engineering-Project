@@ -20,6 +20,7 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   double total = 0.0;
   List<CartItem> cart = [];
+  String SearchQuery = '';
 
   void addToCart(String itemName, double price) {
     setState(() {
@@ -43,7 +44,11 @@ class _MenuPageState extends State<MenuPage> {
         children: [
           Padding(
             padding: EdgeInsets.all(kPadding),
-            child: _buildSearchBar(context),
+            child: _buildSearchBar(context, (query) {
+              setState(() {
+                SearchQuery = query; // Update the search query
+              });
+            }),
           ),
           Padding(
             padding: EdgeInsets.all(kPadding),
@@ -69,7 +74,7 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
-  Widget _buildSearchBar(BuildContext context) {
+ Widget _buildSearchBar(BuildContext context, Function(String) onSearchChanged) {
     return Container(
       height: 40, // Adjust the height of the container
       width: 200, // Adjust the width of the container
@@ -79,6 +84,9 @@ class _MenuPageState extends State<MenuPage> {
         border: Border.all(color: Colors.grey.withOpacity(0.3)),
       ),
       child: TextFormField(
+        onChanged: (value) {
+          onSearchChanged(value); // Pass the search query to the parent widget
+        },
         decoration: InputDecoration(
           hintText: "Search",
           prefixIcon: Icon(Icons.search),
@@ -88,7 +96,7 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   Widget _buildCuisineSection(
-      BuildContext context, String title, List<Widget> recipes) {
+      BuildContext context, String title, List<Widget> recipes ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
