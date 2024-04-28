@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'navigation.dart'; // Import the Navigationbar widget file here
+import 'package:mealkit/screens/services/auth.dart';
 
 class CartItem {
   final String name;
@@ -20,13 +21,22 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   double total = 0.0;
   List<CartItem> cart = [];
-  String SearchQuery = '';
+  String searchQuery = '';
+  final AuthService _auth = AuthService();
 
-  void addToCart(String itemName, double price) {
+  void addToCart(String itemName, double price) async {
+    // Create a CartItem and add to cart
     setState(() {
       cart.add(CartItem(name: itemName, price: price));
       total += price;
     });
+
+    // Now add to Firestore
+    try {
+      await _auth.addOrderDetails(itemName, price); // Call AuthService's addOrderDetails
+    } catch (e) {
+      print('Error adding to Firestore: $e');
+    }
   }
 
   @override
@@ -46,7 +56,7 @@ class _MenuPageState extends State<MenuPage> {
             padding: EdgeInsets.all(kPadding),
             child: _buildSearchBar(context, (query) {
               setState(() {
-                SearchQuery = query; // Update the search query
+                searchQuery = query; // Update the search query
               });
             }),
           ),
