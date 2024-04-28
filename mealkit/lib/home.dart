@@ -8,7 +8,6 @@ import 'menupage.dart';
 
 class HomeView extends StatelessWidget {
   double total = 0.0;
-  List<CartItem> cart = [];
   @override
   Widget build(BuildContext context) {
   return Container(
@@ -18,7 +17,7 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.green,
         automaticallyImplyLeading: false,
-        title: Navigationbar(total: total,cartItems: cart,),
+        title: Navigationbar(total: total,items: [],),
       ),
       body: SingleChildScrollView(
         child: Column(

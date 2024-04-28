@@ -14,6 +14,10 @@ class DatabaseService {
   // orders
   final CollectionReference orders = FirebaseFirestore.instance.collection('orders');
 
+  //cart items
+  final CollectionReference ordersCollection = FirebaseFirestore.instance.collection('cart items');
+
+
 
   Future<void> updateUserData(String username, String address,String contact) async {
     // Validate uid
@@ -50,5 +54,13 @@ class DatabaseService {
     QuerySnapshot querySnapshot = await orders.where('userId', isEqualTo: uid).get();
     return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
   }
-
+Future<List<Map<String, dynamic>>> getOrderDetails() async {
+    try {
+      QuerySnapshot querySnapshot = await ordersCollection.where('userId', isEqualTo: uid).get();
+      return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    } catch (e) {
+      print('Error fetching order details: $e');
+      return [];
+    }
+  }
 }

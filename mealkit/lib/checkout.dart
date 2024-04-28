@@ -26,17 +26,23 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   @override
   void initState() {
-    super.initState();
+  super.initState();
 
-    // Get the current user from the Provider
-    final user = Provider.of<User_Details?>(context, listen: false);
-    if (user == null || user.uid == null) {
-      throw ArgumentError('User ID is required but not available');
-    }
+  // Get the current user from the Provider
+  final user = Provider.of<User_Details?>(context, listen: false);
 
+  // Check if the user is not logged in or user ID is null
+  if (user == null || user.uid == null) {
+    // Navigate to login page
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      Navigator.pushReplacementNamed(context, '/wrapper'); // '/wrapper' represents your login page route
+    });
+  } else {
     _databaseService = DatabaseService(uid: user.uid!); // Initialize with userId
     _loadUserOrders(); // Load orders
   }
+}
+
 
   void _loadUserOrders() async {
     try {
@@ -53,7 +59,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Navigationbar(total: 0.0, cartItems: []),
+        title: Navigationbar(total: 0.0, items: [],),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.green,
       ),

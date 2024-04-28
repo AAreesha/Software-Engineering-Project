@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:mealkit/screens/services/database.dart';
 import 'menupage.dart';
 
+
 class Navigationbar extends StatefulWidget {
-  final List<CartItem> cartItems;
+  final List<Map<String, dynamic>> items;
   final double total;
 
-  const Navigationbar({Key? key, required this.cartItems, required this.total}) : super(key: key);
+  const Navigationbar({Key? key, required this.items, required this.total}) : super(key: key);
 
   @override
   _NavigationbarState createState() => _NavigationbarState();
 }
 
 class _NavigationbarState extends State<Navigationbar> {
+
   @override
+  
   Widget build(BuildContext context) {
     // Check if there are items in the cart
-    bool hasItems = widget.cartItems.isNotEmpty;
+    bool hasItems = widget.items.isNotEmpty;
     // Calculate the number of items in the cart
-    int itemCount = widget.cartItems.length;
+    int itemCount = widget.items.length;
 
     return Container(
       height: 100,
@@ -48,7 +52,7 @@ class _NavigationbarState extends State<Navigationbar> {
                 IconButton(
                   onPressed: () {
                     // Open the cart panel
-                    CartPanel.showCartPanel(context, widget.cartItems).then((value) {
+                    CartPanel.showCartPanel(context, widget.items).then((value) {
                       // Update the state of Navigationbar when the CartPanel is closed
                       setState(() {});
                     });
@@ -87,7 +91,7 @@ class _NavigationbarState extends State<Navigationbar> {
             IconButton(
               onPressed: () {
                 // Open the cart panel
-                CartPanel.showCartPanel(context, widget.cartItems).then((value) {
+                CartPanel.showCartPanel(context, widget.items).then((value) {
                   // Update the state of Navigationbar when the CartPanel is closed
                   setState(() {});
                 });
@@ -125,9 +129,12 @@ class _NavBarItem extends StatelessWidget {
 }
 
 class CartPanel extends StatelessWidget {
-  static Future<void> showCartPanel(BuildContext context, List<CartItem> items) async {
-    double shipping = 0.0;
-    double total = items.fold(0, (previousValue, element) => previousValue + element.price);
+  final List<Map<String, dynamic>> items;
+
+  CartPanel({required this.items});
+  static Future<void> showCartPanel(BuildContext context, List<Map<String, dynamic>> items) async {
+    double shipping = 150.0;
+   double total = items.fold(0.0, (previousValue, items) => previousValue + items['price']);
     double tax = total * 0.13;
     double totalBill = total + shipping + tax;
 
@@ -182,7 +189,7 @@ class CartPanel extends StatelessWidget {
                                       title: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(items[index].name),
+                                          Text(items[index]['Name']),
                                           IconButton(
                                             onPressed: () {
                                               // Remove the item from the cart
@@ -201,7 +208,7 @@ class CartPanel extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      trailing: Text('\Rs.${items[index].price.toStringAsFixed(2)}'),
+                                      trailing: Text('\Rs.${items[index]['price'].toStringAsFixed(2)}'),
                                     );
                                   },
                                 ),
