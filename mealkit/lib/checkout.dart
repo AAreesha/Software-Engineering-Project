@@ -82,9 +82,9 @@ void _loadUserOrders() async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Navigationbar(total: 0.0),
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.green,
+        title: Text('Checkout '),
+        // automaticallyImplyLeading: false,
+        // backgroundColor: Colors.green,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20.0),
