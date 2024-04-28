@@ -33,6 +33,23 @@ class DatabaseService {
     }, SetOptions(merge: true)); // Set merge option
   }
 
+// fetching email change if it causes errors
+ Future<String> getUserEmail() async {
+    try {
+      // Get the user document based on the UID
+      DocumentSnapshot userDoc = await userinfo.doc(uid).get();
+      // Check if the user document exists and contains an email field
+      if (userDoc.exists && userDoc.data() != null) {
+        return userDoc['email'] ?? 'Email not found';
+      } else {
+        return 'Email not found';
+      }
+    } catch (e) {
+      print('Error retrieving user email: $e');
+      return 'Email not found';
+    }
+  }
+
 
   // Function to add an order to the 'orders' collection
   Future<void> addOrder(String orderId, String itemName, double price) async {

@@ -3,6 +3,7 @@ import 'package:mealkit/screens/services/database.dart';
 import 'package:mealkit/navigation.dart';
 import 'package:mealkit/models/user.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CheckoutPage extends StatefulWidget {
   // No need for userId as a parameter
@@ -24,10 +25,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
   TextEditingController cvvController = TextEditingController();
   TextEditingController expDateController = TextEditingController();
   bool? isCODSelected = false;
+ 
+  late String _userEmail = ''; // Variable to hold user's email
+ 
 
   @override
   void initState() {
   super.initState();
+  _getUserEmail(); // Call function to retrieve user's email
+  
+
 
   // Get the current user from the Provider
   final user = Provider.of<User_Details?>(context, listen: false);
@@ -43,6 +50,22 @@ class _CheckoutPageState extends State<CheckoutPage> {
     _loadUserOrders(); // Load orders
   }
 }
+
+//changes
+void _getUserEmail() async {
+  try {
+    // Get current user from Firebase Authentication
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.email != null) {
+      setState(() {
+        _userEmail = user.email!; // Update user's email in the state
+      });
+    }
+  } catch (e) {
+    print('Error retrieving user email: $e');
+  }
+}
+
 void _loadUserOrders() async {
     try {
       var orders = await _databaseService.getUserOrders();
@@ -97,13 +120,46 @@ void _loadUserOrders() async {
                       var userId = order["userId"] ?? 'Unknown'; // Null check
                       var itemName = order["Name"] ?? 'Unknown Item'; // Null check
                       var price = order["price"] != null ? '\$${order["price"]}' : 'Unknown Price'; // Null check
+                     
 
                       return ListTile(
                         title: Text('Order ID: $userId'),
-                        subtitle: Text('Item: $itemName - Price: $price'),
+                        subtitle: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Item: $itemName - Price: $price'),
+                                  Text('Item: $itemName - Price: $price'),
+                                  Text('UserID: $itemName - $userId')
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.centerRight,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    SizedBox(height: 20),
+                                    Text('Subtotal: \Rs.0'),
+                                    Text('Shipping: \Rs.0'),
+                                    Text('Tax: \Rs.0'),
+                                    Divider(),
+                                    Text('Total: \Rs.0'),
+                                    SizedBox(height: 20),
+                                  ]
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       );
+
                     },
                   ),
+                  
           ],
         ),
       ),

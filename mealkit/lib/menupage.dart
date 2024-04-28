@@ -65,8 +65,8 @@ class _MenuPageState extends State<MenuPage> {
           ),
           Padding(
             padding: EdgeInsets.all(kPadding),
-            child: _buildCuisineSection(context, 'Mexican', [
-              _buildRecipeButton(context, 'Tacos al Pastor',
+            child: _buildCuisineSection(context, 'Indian', [
+              _buildRecipeButton(context, 'Butter Chicken',
                   'Tacos filled with spit-grilled pork.', 'assets/bestseller1.png', 2700.99),
               _buildRecipeButton(context, 'Guacamole',
                   'Classic avocado-based dip.', 'assets/bestseller1.png', 3000.99),

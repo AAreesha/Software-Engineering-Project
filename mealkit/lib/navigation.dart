@@ -90,6 +90,8 @@ void cartitems() async {
                     CartPanel.showCartPanel(context, itemslist).then((value) {
                       // Update the state of Navigationbar when the CartPanel is closed
                       setState(() {});
+
+    
                     });
                   },
                   icon: Icon(Icons.shopping_cart, color: Colors.white, size: 30),
