@@ -4,8 +4,8 @@ import 'package:mealkit/screens/services/auth.dart';
 import 'package:mealkit/screens/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:mealkit/models/user.dart';
-const kPrimaryColor = Color(0xFFe1eaf1);
-const kSecondaryColor = Colors.green; // Dark green color
+const kPrimaryColor = Color.fromARGB(255, 0, 0, 0);
+const kSecondaryColor = Color.fromARGB(255, 47, 112, 50); // Dark green color
 const kMaxWidth = 1232.0;
 const kPadding = 20.0;
 
@@ -54,24 +54,150 @@ class _MenuPageState extends State<MenuPage> {
               });
             }),
           ),
-          Padding(
-            padding: EdgeInsets.all(kPadding),
-            child: _buildCuisineSection(context, 'Italian', [
-              _buildRecipeButton(context, 'Carbonara Pasta',
-                  'Creamy Italian pasta dish with pancetta, and black pepper.', 'assets/bestseller1.png', 1500.99),
-              _buildRecipeButton(context, 'Margherita Pizza',
-                  'Traditional pizza with tomatoes, mozzarella, and basil.', 'assets/bestseller1.png', 2500.99),
-            ]),
-          ),
-          Padding(
-            padding: EdgeInsets.all(kPadding),
-            child: _buildCuisineSection(context, 'Indian', [
-              _buildRecipeButton(context, 'Butter Chicken',
-                  'Tacos filled with spit-grilled pork.', 'assets/bestseller1.png', 2700.99),
-              _buildRecipeButton(context, 'Guacamole',
-                  'Classic avocado-based dip.', 'assets/bestseller1.png', 3000.99),
-            ]),
-          ),
+Padding(
+  padding: EdgeInsets.all(kPadding),
+  child: _buildCuisineSection(context, 'Korean', [
+    _buildRecipeButton(
+      context,
+      'Kimchi Stew',
+      'Spicy Korean Kimchi Stew',
+      'assets/stew.png',
+      1500.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Bibimbap',
+      'Traditional Korean rice dish',
+      'assets/bibimbap.png', // Correct the image path if needed
+      2500.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Beef Ramen',
+      'Japanese-style ramen noodles',
+      'assets/ramen.png',
+      1500.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Spicy Ribs',
+      'Tender Korean-style beef ribs',
+      'assets/ribs.png',
+      2500.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Fishcake Soup',
+      'Traditional Korean soup',
+      'assets/fishcake.png',
+      2500.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Black Noodles',
+      'Korean-Chinese noodle.',
+      'assets/black.png',
+      2500.99,
+    ),
+  ]),
+),
+
+Padding(
+  padding: EdgeInsets.all(kPadding),
+  child: _buildCuisineSection(context, 'Indian', [
+    _buildRecipeButton(
+      context,
+      'Butter Chicken',
+      'Indian dish with cashews',
+      'assets/experiment.png',
+      2700.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Khoya Kulfi',
+      'Traditional Indian dessert.',
+      'assets/kulfi.png',
+      3000.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Cholay Tarka',
+      'Spicy and tangy chickpea curry',
+      'assets/chola (1).png',
+      3000.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Kadhi Chawal',
+      'Creamy yogurt-based curry',
+      'curry.png',
+      3000.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Mutton Stew',
+      'Slow-cooked mutton stew ',
+      'stew.png',
+      3000.99,
+    ),
+        _buildRecipeButton(
+      context,
+      'Ras Malai',
+      'Milky Dessert with Saffron',
+      'ras.png',
+      3000.99,
+    ),
+  ]),
+),
+
+Padding(
+  padding: EdgeInsets.all(kPadding),
+  child: _buildCuisineSection(context, 'Italian', [
+    _buildRecipeButton(
+      context,
+      'Chicken Parm',
+      'Golden Crusted Fillet',
+      'assets/parm.png',
+      2700.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Spaghetti',
+      'Meatball Sauce',
+      'assets/spag.png',
+      3000.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Tiramisu',
+      'Cocoa Cream',
+      'assets/tir.png',
+      3000.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Seafood Pasta',
+      'Mussels and Clams',
+      'sea.png',
+      3000.99,
+    ),
+    _buildRecipeButton(
+      context,
+      'Lasagna',
+      'Beef and Cheese ',
+      'las.png',
+      3000.99,
+    ),
+        _buildRecipeButton(
+      context,
+      'Pesto Pasta',
+      'Vegan Herb Pasta ',
+      'bestseller1.png',
+      3000.99,
+    ),
+  ]),
+),
+
           // Add more cuisine sections as needed
         ],
       ),
