@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mealkit/screens/services/database.dart';
+import 'package:mealkit/screens/services/auth.dart';
+import 'package:provider/provider.dart';
+import 'package:mealkit/models/user.dart';
 import 'menupage.dart';
 
 
 class Navigationbar extends StatefulWidget {
-  final List<Map<String, dynamic>> items;
   final double total;
 
-  const Navigationbar({Key? key, required this.items, required this.total}) : super(key: key);
+  const Navigationbar({Key? key, required this.total}) : super(key: key);
 
   @override
   _NavigationbarState createState() => _NavigationbarState();
@@ -17,11 +19,44 @@ class _NavigationbarState extends State<Navigationbar> {
 
   @override
   
+
+  List<Map<String, dynamic>> itemslist = []; // List to hold orders data
+  String searchQuery = '';
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  late DatabaseService _databaseService; // Instance of DatabaseService
+  void initState() {
+  super.initState();
+
+  // Get the current user from the Provider
+  final user = Provider.of<User_Details?>(context, listen: false);
+
+  // Check if the user is not logged in or user ID is null
+  if (user == null || user.uid == null) {
+  } else {
+    _databaseService = DatabaseService(uid: user.uid!); // Initialize with userId
+  }
+}
+void cartitems() async {
+
+    // Now add to Firestore
+     try {
+      var orders = await _databaseService.getOrderDetails();
+      setState(() {
+        itemslist = orders;
+      });
+      print('Items retrieved from Firestore: $itemslist');
+    } catch (e) {
+      debugPrint('Error loading orders: $e'); // Error handling
+    }
+
+  }
   Widget build(BuildContext context) {
+    cartitems();
     // Check if there are items in the cart
-    bool hasItems = widget.items.isNotEmpty;
+    bool hasItems = itemslist.isNotEmpty;
     // Calculate the number of items in the cart
-    int itemCount = widget.items.length;
+    int itemCount = itemslist.length;
 
     return Container(
       height: 100,
@@ -52,7 +87,7 @@ class _NavigationbarState extends State<Navigationbar> {
                 IconButton(
                   onPressed: () {
                     // Open the cart panel
-                    CartPanel.showCartPanel(context, widget.items).then((value) {
+                    CartPanel.showCartPanel(context, itemslist).then((value) {
                       // Update the state of Navigationbar when the CartPanel is closed
                       setState(() {});
                     });
@@ -91,7 +126,7 @@ class _NavigationbarState extends State<Navigationbar> {
             IconButton(
               onPressed: () {
                 // Open the cart panel
-                CartPanel.showCartPanel(context, widget.items).then((value) {
+                CartPanel.showCartPanel(context, itemslist).then((value) {
                   // Update the state of Navigationbar when the CartPanel is closed
                   setState(() {});
                 });

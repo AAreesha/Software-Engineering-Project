@@ -12,7 +12,7 @@ class Registration extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Navigationbar(total: 0.0,items: [],),
+        title: Navigationbar(total: 0.0),
         centerTitle: true,
       ),
 

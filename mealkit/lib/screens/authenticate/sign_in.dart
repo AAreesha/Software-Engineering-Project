@@ -11,7 +11,7 @@ class SignIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Navigationbar(total: 0.0,items: [],),
+        title: Navigationbar(total: 0.0),
          automaticallyImplyLeading: false,
           backgroundColor: Colors.green,
       ),

@@ -14,6 +14,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final _formKey = GlobalKey<FormState>();
   late DatabaseService _databaseService; // Instance of DatabaseService
   List<Map<String, dynamic>> _userOrders = []; // List to hold orders data
+   List<Map<String, dynamic>> itemslist = []; // List to hold orders data
 
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -42,9 +43,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     _loadUserOrders(); // Load orders
   }
 }
-
-
-  void _loadUserOrders() async {
+void _loadUserOrders() async {
     try {
       var orders = await _databaseService.getUserOrders();
       setState(() {
@@ -55,11 +54,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Navigationbar(total: 0.0, items: [],),
+        title: Navigationbar(total: 0.0),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.green,
       ),

@@ -17,7 +17,7 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.green,
         automaticallyImplyLeading: false,
-        title: Navigationbar(total: total,items: [],),
+        title: Navigationbar(total: total),
       ),
       body: SingleChildScrollView(
         child: Column(

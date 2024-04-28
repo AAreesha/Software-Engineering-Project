@@ -23,7 +23,7 @@ class VoucherPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         title: Navigationbar(total: 0.0,items: []),
+         title: Navigationbar(total: 0.0),
           backgroundColor: Colors.green,
           automaticallyImplyLeading: false,
       ),

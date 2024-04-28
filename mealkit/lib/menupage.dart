@@ -16,27 +16,10 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   double total = 0.0;
-  List<Map<String, dynamic>> itemslist = []; // List to hold orders data
   String searchQuery = '';
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   late DatabaseService _databaseService; // Instance of DatabaseService
-  void initState() {
-  super.initState();
-
-  // Get the current user from the Provider
-  final user = Provider.of<User_Details?>(context, listen: false);
-
-  // Check if the user is not logged in or user ID is null
-  if (user == null || user.uid == null) {
-    // Navigate to login page
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      Navigator.pushReplacementNamed(context, '/wrapper'); // '/wrapper' represents your login page route
-    });
-  } else {
-    _databaseService = DatabaseService(uid: user.uid!); // Initialize with userId
-  }
-}
   void addToCart(String itemName, double price) async {
 
     // Now add to Firestore
@@ -44,15 +27,6 @@ class _MenuPageState extends State<MenuPage> {
       await _auth.addOrderDetails(itemName, price); // Call AuthService's addOrderDetails
     } catch (e) {
       print('Error adding to Firestore: $e');
-    }
-     try {
-      var orders = await _databaseService.getOrderDetails();
-      setState(() {
-        itemslist = orders;
-      });
-      print('Items retrieved from Firestore: $itemslist');
-    } catch (e) {
-      debugPrint('Error loading orders: $e'); // Error handling
     }
 
   }
@@ -66,7 +40,7 @@ class _MenuPageState extends State<MenuPage> {
         automaticallyImplyLeading: false,
         title: Navigationbar(
           total: total,
-          items: itemslist,
+
           
         ),
       ),
@@ -171,10 +145,17 @@ class _MenuPageState extends State<MenuPage> {
                   ElevatedButton(
                     onPressed: () {
                       // Add to Cart functionality
+                      final user = Provider.of<User_Details?>(context, listen: false);
+                      if (user == null || user.uid == null) {
+                          // Navigate to login page
+                          WidgetsBinding.instance?.addPostFrameCallback((_) {
+                            Navigator.pushReplacementNamed(context, '/wrapper'); // '/wrapper' represents your login page route
+                          });}
+                      else {
                       addToCart(title, price);
                       print('$title added to cart');
                       Navigator.of(context).pop(); // Close the dialog
-                    },
+          }},
                     child: Text('Add to Cart'),
                   ),
                 ],
