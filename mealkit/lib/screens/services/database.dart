@@ -15,7 +15,7 @@ class DatabaseService {
   final CollectionReference orders = FirebaseFirestore.instance.collection('orders');
 
   //cart items
-  final CollectionReference ordersCollection = FirebaseFirestore.instance.collection('orders');
+  //final CollectionReference ordersCollection = FirebaseFirestore.instance.collection('orders');
 
 
 
@@ -51,14 +51,17 @@ class DatabaseService {
   }
 
 
-  // Function to add an order to the 'orders' collection
-  Future<void> addOrder(String orderId, String itemName, double price) async {
+ Future<void> addOrderItem(String orderId, String itemName, double price) async {
+  // Ensure the UID is valid
   if (uid.isEmpty) {
     throw ArgumentError('UID must not be empty');
   }
-  
-  // Add a new order item with a unique document ID
-  await orders.doc(orderId).collection('items').add({
+
+  // Reference the specific order using orderId
+  CollectionReference orderItems = orders.doc(orderId).collection('items');
+
+  // Add a new item with a unique document ID in the order's sub-collection
+  await orderItems.add({
     'userId': uid,
     'Name': itemName,
     'price': price,
@@ -69,7 +72,7 @@ class DatabaseService {
   
   // Function to retrieve all orders for a specific user
   Future<List<Map<String, dynamic>>> getUserOrders() async {
-     QuerySnapshot querySnapshot = await ordersCollection.where('userId', isEqualTo: uid).get();
+     QuerySnapshot querySnapshot = await orders.where('userId', isEqualTo: uid).get();
 
   // Initialize an empty list to store all order items
   List<Map<String, dynamic>> allOrderItems = [];
@@ -91,7 +94,7 @@ class DatabaseService {
   }
 Future<List<Map<String, dynamic>>> getOrderDetails() async {
   // Query the order documents where userId is equal to uid
-  QuerySnapshot querySnapshot = await ordersCollection.where('userId', isEqualTo: uid).get();
+  QuerySnapshot querySnapshot = await orders.where('userId', isEqualTo: uid).get();
 
   // Initialize an empty list to store all order items
   List<Map<String, dynamic>> allOrderItems = [];
@@ -114,13 +117,14 @@ Future<List<Map<String, dynamic>>> getOrderDetails() async {
 Future<void> deleteOrder(String orderId, String itemName, double price, Timestamp timestamp) async {
     try {
       // Query for the order document to delete
-      QuerySnapshot querySnapshot = await ordersCollection
+      QuerySnapshot querySnapshot = await orders
           .where('userId', isEqualTo: uid)
           .where('Name', isEqualTo: itemName)
           .where('price', isEqualTo: price)
-          .where('timestamp', isEqualTo: timestamp)
+          //.where('timestamp', isEqualTo: timestamp)
           .get();
-
+      print('Deleting order with Name: $itemName, Price: $price, Timestamp: $timestamp');
+      print('Documents found: ${querySnapshot.docs.length}');
       // Iterate through the result documents and delete them
       for (QueryDocumentSnapshot orderDoc in querySnapshot.docs) {
         // Delete each order document
