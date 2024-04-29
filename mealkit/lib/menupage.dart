@@ -18,8 +18,6 @@ class _MenuPageState extends State<MenuPage> {
   double total = 0.0;
   String searchQuery = '';
   final AuthService _auth = AuthService();
-  final _formKey = GlobalKey<FormState>();
-  late DatabaseService _databaseService; // Instance of DatabaseService
   void addToCart(String itemName, double price) async {
 
     // Now add to Firestore

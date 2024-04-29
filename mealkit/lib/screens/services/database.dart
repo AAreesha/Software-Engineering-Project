@@ -111,4 +111,25 @@ Future<List<Map<String, dynamic>>> getOrderDetails() async {
   // Return the list of all order items
   return allOrderItems;
 }
+Future<void> deleteOrder(String orderId, String itemName, double price, Timestamp timestamp) async {
+    try {
+      // Query for the order document to delete
+      QuerySnapshot querySnapshot = await ordersCollection
+          .where('userId', isEqualTo: uid)
+          .where('Name', isEqualTo: itemName)
+          .where('price', isEqualTo: price)
+          .where('timestamp', isEqualTo: timestamp)
+          .get();
+
+      // Iterate through the result documents and delete them
+      for (QueryDocumentSnapshot orderDoc in querySnapshot.docs) {
+        // Delete each order document
+        await orderDoc.reference.delete();
+      }
+    } catch (e) {
+      // Handle errors
+      print('Error deleting order: $e');
+      throw e; // Re-throw the error for handling at a higher level
+    }
+  }
 }

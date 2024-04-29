@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mealkit/screens/services/database.dart';
 import 'package:mealkit/screens/services/auth.dart';
@@ -51,6 +52,8 @@ void cartitems() async {
     }
 
   }
+
+
   Widget build(BuildContext context) {
     cartitems();
     // Check if there are items in the cart
@@ -146,6 +149,7 @@ class _NavBarItem extends StatelessWidget {
   final String route;
 
   const _NavBarItem(this.title, this.route, {Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +178,28 @@ class CartPanel extends StatelessWidget {
    double total = items.fold(0.0, (previousValue, items) => previousValue + items['price']);
     double tax = total * 0.13;
     double totalBill = total + shipping + tax;
+    final AuthService _auth = AuthService();
+    final _formKey = GlobalKey<FormState>();
+    late DatabaseService _databaseService; // Instance of DatabaseService
+    final user = Provider.of<User_Details?>(context, listen: false);
+    if (user == null || user.uid == null) {
+  } else {
+    _databaseService = DatabaseService(uid: user.uid!); // Initialize with userId
+  }
+
+
+    void removeitem(String name, double price, Timestamp timestamp, String userid ) async {
+
+    // Now add to Firestore
+     try {
+      await _databaseService.deleteOrder(userid, name, price, timestamp);
+    print('Order deleted successfully');
+    } catch (e) {
+    print('Error deleting order: $e');
+    throw e; // Re-throw the error for handling at a higher level if needed
+  }
+
+  }
 
     await showModalBottomSheet(
       context: context,
@@ -232,7 +258,7 @@ class CartPanel extends StatelessWidget {
                                               // Remove the item from the cart
                                               // You may want to add a confirmation dialog here
                                               setState(() {
-                                                items.removeAt(index);
+                                                removeitem(items[index]['Name'],items[index]['price'],items[index]['timestamp'],items[index]['userId']);
                                               });
 
                                               // Rebuild the CartPanel with the updated items
