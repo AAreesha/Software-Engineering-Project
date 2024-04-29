@@ -14,6 +14,8 @@ class DatabaseService {
   // orders
   final CollectionReference orders = FirebaseFirestore.instance.collection('orders');
 
+  final CollectionReference orderHistory = FirebaseFirestore.instance.collection('Order History');
+
   //cart items
   //final CollectionReference ordersCollection = FirebaseFirestore.instance.collection('orders');
 
@@ -125,7 +127,6 @@ Future<void> deleteOrderItem(String orderId, String itemName, double price) asyn
         .where('price', isEqualTo: price)
         .get();
 
-    print('Deleting item with Name: $itemName, Price: $price');
 
     // Iterate through the result documents and delete them
     for (QueryDocumentSnapshot itemDoc in querySnapshot.docs) {
@@ -138,5 +139,44 @@ Future<void> deleteOrderItem(String orderId, String itemName, double price) asyn
     throw e; // Re-throw the error for handling at a higher level
   }
 }
+
+Future<void> moveOrdersToHistory() async {
+    try {
+      // Get all orders for the current user
+      List<Map<String, dynamic>> orders = await getOrderDetails();
+      for (var order in orders) {
+      print("Item: ${order['Name']}, Price: ${order['price']}");
+    }
+
+      // Check if there are any orders
+      if (orders.isNotEmpty) {
+        // Get the current timestamp
+        DateTime now = DateTime.now();
+
+        // Create a batch
+        WriteBatch batch = FirebaseFirestore.instance.batch();
+
+        // Iterate through each order and add it to the order history
+        for (var order in orders) {
+          // Add the order to the order history with the current timestamp
+          batch.set(orderHistory.doc(), {
+            'userid': uid,
+            'name': order['Name'],
+            'price': order['price'],
+            'timestamp': now,
+          });
+
+          // Delete the order from the orders collection
+          await deleteOrderItem(order['userId'], order['Name'], order['price']);
+        }
+
+        // Commit the batch
+        await batch.commit();
+      }
+    } catch (e) {
+      print('Error moving orders to history: $e');
+      throw e;
+    }
+  }
 
 }

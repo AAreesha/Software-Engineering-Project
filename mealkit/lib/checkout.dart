@@ -175,9 +175,52 @@ class _CheckoutPageState extends State<CheckoutPage> {
             SizedBox(height: 20.0),
             Center(
               child: ElevatedButton(
+                onPressed: () async {
+    try {
+      // Move orders to order history
+      await _databaseService.moveOrdersToHistory();
+
+      // Show a success message or navigate to a success page
+      // For example:
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Success'),
+            content: Text('Orders submitted successfully.'),
+            actions: [
+              TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/home');
+                  Navigator.pop(context); // Close the dialog
+                  Navigator.pushNamed(context, '/home'); // Navigate to home page
                 },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      // Show an error message
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to submit orders. Please try again later.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                 ),
