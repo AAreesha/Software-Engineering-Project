@@ -114,26 +114,29 @@ Future<List<Map<String, dynamic>>> getOrderDetails() async {
   // Return the list of all order items
   return allOrderItems;
 }
-Future<void> deleteOrder(String orderId, String itemName, double price, Timestamp timestamp) async {
-    try {
-      // Query for the order document to delete
-      QuerySnapshot querySnapshot = await orders
-          .where('userId', isEqualTo: uid)
-          .where('Name', isEqualTo: itemName)
-          .where('price', isEqualTo: price)
-          //.where('timestamp', isEqualTo: timestamp)
-          .get();
-      print('Deleting order with Name: $itemName, Price: $price, Timestamp: $timestamp');
-      print('Documents found: ${querySnapshot.docs.length}');
-      // Iterate through the result documents and delete them
-      for (QueryDocumentSnapshot orderDoc in querySnapshot.docs) {
-        // Delete each order document
-        await orderDoc.reference.delete();
-      }
-    } catch (e) {
-      // Handle errors
-      print('Error deleting order: $e');
-      throw e; // Re-throw the error for handling at a higher level
+Future<void> deleteOrderItem(String orderId, String itemName, double price) async {
+  try {
+    // Reference the specific order items collection using orderId
+    CollectionReference orderItems = orders.doc(orderId).collection('items');
+
+    // Query for the item document to delete
+    QuerySnapshot querySnapshot = await orderItems
+        .where('Name', isEqualTo: itemName)
+        .where('price', isEqualTo: price)
+        .get();
+
+    print('Deleting item with Name: $itemName, Price: $price');
+
+    // Iterate through the result documents and delete them
+    for (QueryDocumentSnapshot itemDoc in querySnapshot.docs) {
+      // Delete each item document
+      await itemDoc.reference.delete();
     }
+  } catch (e) {
+    // Handle errors
+    print('Error deleting item: $e');
+    throw e; // Re-throw the error for handling at a higher level
   }
+}
+
 }

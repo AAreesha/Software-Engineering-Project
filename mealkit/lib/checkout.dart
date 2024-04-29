@@ -6,17 +6,15 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CheckoutPage extends StatefulWidget {
-  // No need for userId as a parameter
   @override
   _CheckoutPageState createState() => _CheckoutPageState();
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
   final _formKey = GlobalKey<FormState>();
-  late DatabaseService _databaseService; // Instance of DatabaseService
-  List<Map<String, dynamic>> _userOrders = []; // List to hold orders data
-   List<Map<String, dynamic>> itemslist = []; // List to hold orders data
-
+  late DatabaseService _databaseService;
+  List<Map<String, dynamic>> _userOrders = [];
+  List<Map<String, dynamic>> itemslist = [];
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
@@ -25,143 +23,195 @@ class _CheckoutPageState extends State<CheckoutPage> {
   TextEditingController cvvController = TextEditingController();
   TextEditingController expDateController = TextEditingController();
   bool? isCODSelected = false;
- 
-  late String _userEmail = ''; // Variable to hold user's email
- 
+  late String _userEmail = '';
 
   @override
   void initState() {
-  super.initState();
-  _getUserEmail(); // Call function to retrieve user's email
-  
-
-
-  // Get the current user from the Provider
-  final user = Provider.of<User_Details?>(context, listen: false);
-
-  // Check if the user is not logged in or user ID is null
-  if (user == null || user.uid == null) {
-    // Navigate to login page
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      Navigator.pushReplacementNamed(context, '/wrapper'); // '/wrapper' represents your login page route
-    });
-  } else {
-    _databaseService = DatabaseService(uid: user.uid!); // Initialize with userId
-    _loadUserOrders(); // Load orders
-  }
-}
-
-//changes
-void _getUserEmail() async {
-  try {
-    // Get current user from Firebase Authentication
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null && user.email != null) {
-      setState(() {
-        _userEmail = user.email!; // Update user's email in the state
+    super.initState();
+    _getUserEmail();
+    final user = Provider.of<User_Details?>(context, listen: false);
+    if (user == null || user.uid == null) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, '/wrapper');
       });
+    } else {
+      _databaseService = DatabaseService(uid: user.uid!);
+      _loadUserOrders();
     }
-  } catch (e) {
-    print('Error retrieving user email: $e');
   }
-}
 
-void _loadUserOrders() async {
+  void _getUserEmail() async {
     try {
-      var orders = await _databaseService.getUserOrders();
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null && user.email != null) {
+        setState(() {
+          _userEmail = user.email!;
+        });
+      }
+    } catch (e) {
+      print('Error retrieving user email: $e');
+    }
+  }
+
+  void _loadUserOrders() async {
+    try {
+      var orders = await _databaseService.getOrderDetails();
       setState(() {
         _userOrders = orders;
       });
     } catch (e) {
-      debugPrint('Error loading orders: $e'); // Error handling
+      debugPrint('Error loading orders: $e');
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
+    double subtotal = 0.0;
+    double shipping = 150.0;
+    double tax = 0.0;
+    double total = 0.0;
+
+    if (_userOrders.isNotEmpty) {
+      subtotal = _userOrders
+          .map((order) => order["price"] ?? 0.0)
+          .reduce((value, element) => value + element);
+      tax = 0.13 * subtotal;
+      total = subtotal + shipping + tax;
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Checkout '),
-        // automaticallyImplyLeading: false,
-        // backgroundColor: Colors.green,
+        title: Text('Checkout'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // Form Section
             Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Form fields for user details and payment
-                  // Existing code
                 ],
               ),
             ),
-
-            // Orders Section
             SizedBox(height: 20.0),
-            Text(
-              'Your Orders:',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10.0),
-            _userOrders.isEmpty
-                ? Text('No orders found.') // No orders message
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _userOrders.length,
-                    itemBuilder: (context, index) {
-                      var order = _userOrders[index];
-                      var userId = order["userId"] ?? 'Unknown'; // Null check
-                      var itemName = order["Name"] ?? 'Unknown Item'; // Null check
-                      var price = order["price"] != null ? '\$${order["price"]}' : 'Unknown Price'; // Null check
-                     
-
-                      return ListTile(
-                        title: Text('Order ID: $userId'),
-                        subtitle: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Item: $itemName - Price: $price'),
-                                  Text('Item: $itemName - Price: $price'),
-                                  Text('UserID: $itemName - $userId')
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                alignment: Alignment.centerRight,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+            if (_userOrders.isNotEmpty)
+              Card(
+                elevation: 4.0,
+                margin: EdgeInsets.all(0.0),
+                child: Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Your Orders:',
+                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: _userOrders.length,
+                            itemBuilder: (context, index) {
+                              var order = _userOrders[index];
+                              var itemName = order["Name"] ?? 'Unknown Item';
+                              var price = order["price"] != null ? '\Rs${order["price"].toStringAsFixed(2)}' : 'Unknown Price';
+                              return Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    SizedBox(height: 20),
-                                    Text('Subtotal: \Rs.0'),
-                                    Text('Shipping: \Rs.0'),
-                                    Text('Tax: \Rs.0'),
-                                    Divider(),
-                                    Text('Total: \Rs.0'),
-                                    SizedBox(height: 20),
-                                  ]
+                                    Text(
+                                      itemName,
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'Price: $price',
+                                      style: TextStyle(color: Colors.grey[600]),
+                                    ),
+                                  ],
                                 ),
-                              ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 20.0),
+                          Text(
+                            'Order Summary',
+                            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 12.0),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _OrderSummaryItem('Subtotal', '\Rs.${subtotal.toStringAsFixed(2)}'),
+                                _OrderSummaryItem('Shipping', '\Rs.${shipping.toStringAsFixed(2)}'),
+                                _OrderSummaryItem('Tax', '\Rs.${tax.toStringAsFixed(2)}'),
+                                Divider(),
+                                _OrderSummaryItem('Total', '\Rs.${total.toStringAsFixed(2)}'),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-
-                    },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  
+                ),
+              ),
+            if (_userOrders.isEmpty)
+              Center(
+                child: Text(
+                  'Your cart is empty!',
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                ),
+              ),
+            SizedBox(height: 20.0),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/home');
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                ),
+                child: Text(
+                  'Submit Order',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _OrderSummaryItem extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _OrderSummaryItem(this.label, this.value, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label),
+          Text(value),
+        ],
       ),
     );
   }

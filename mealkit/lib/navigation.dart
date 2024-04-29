@@ -192,7 +192,7 @@ class CartPanel extends StatelessWidget {
 
     // Now add to Firestore
      try {
-      await _databaseService.deleteOrder(userid, name, price, timestamp);
+      await _databaseService.deleteOrderItem(userid, name, price);
     print('Order deleted successfully');
     } catch (e) {
     print('Error deleting order: $e');
@@ -299,8 +299,12 @@ class CartPanel extends StatelessWidget {
                               SizedBox(height: 20),
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/checkout');
-                                },
+                                // Navigate to the checkout page and pass parameters
+                                Navigator.pushNamed(
+                                  context, 
+                                  '/checkout', 
+                                );
+  },
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                                 ),

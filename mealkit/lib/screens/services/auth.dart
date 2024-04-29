@@ -67,7 +67,7 @@ class AuthService {
     }
 
     try {
-      await DatabaseService(uid: user.uid).addOrder(user.uid,itemName, price);
+      await DatabaseService(uid: user.uid).addOrderItem(user.uid,itemName, price);
     } catch (e) {
       print('Error adding order details: $e');
     }
