@@ -274,13 +274,13 @@ Widget _buildBestSellersSection() {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(
-            child: _buildBestSellerItem('assets/product1.png', 'Product 1', 200, 200), // Adjust dimensions as needed
+            child: _buildBestSellerItem('assets/product1.png', 'Bibimbap', 200, 200), // Adjust dimensions as needed
           ),
           Expanded(
-            child: _buildBestSellerItem('assets/product2.png', 'Product 2', 200, 200), // Adjust dimensions as needed
+            child: _buildBestSellerItem('assets/product2.png', 'Chicken Tikka', 200, 200), // Adjust dimensions as needed
           ),
           Expanded(
-            child: _buildBestSellerItem('assets/product2.png', 'Product 3', 200, 200), // Adjust dimensions as needed
+            child: _buildBestSellerItem('assets/review1.png', 'Fettuccine Pasta ', 200, 200), // Adjust dimensions as needed
           ),
         ],
       ),
